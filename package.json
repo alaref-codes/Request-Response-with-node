@@ -10,6 +10,7 @@
   "author": "Alaref",
   "license": "MIT",
   "dependencies": {
+    "express": "^4.17.1",
     "lodash": "^4.17.21"
   }
 }
