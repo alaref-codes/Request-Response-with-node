@@ -7,13 +7,14 @@
 
 
     <div class="create-blog create">
-        <form>
+        <form action="/blogs" method="POST" >
             <label for="title">Title</label>
-            <input type="text" id="title" required >
-            <label for="blog">Blog snippet</label>
-            <input type="text" id="blog" required >
+            <input type="text" id="title" name="title" required >
+            <label for="snippet">Blog snippet</label>
+            <input type="text" id="snippet" name="snippet" required >
             <label for="body">Blog body</label>
-            <input type="textarea" id="body" required >
+            <textarea name="body" id="body" cols="30" rows="10"></textarea>
+
             <button>Submit</button>
         </form>
     </div>
