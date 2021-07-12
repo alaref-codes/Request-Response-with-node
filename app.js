@@ -3,6 +3,7 @@ const app = express();
 const morgran = require('morgan');
 const mongoose = require('mongoose');
 const Blog = require('./models/blog');
+const blogRoutes = require('./routes/blogRoutes')
 const blogCont = require('./controller/blogController')
 // Connecting to mongo db
 const dbURI =  'mongodb+srv://Alaref:uUYZcvwrlmYFGXJK@cluster0.n9u2f.mongodb.net/database?retryWrites=true&w=majority'
@@ -32,15 +33,7 @@ app.get('/about' , (req,res) => {
 });
 
 // Blog pages
-app.get('/blogs' , blogCont.blog_index )
-
-app.get('/blogs/create' , blogCont.blog_create_get );
-
-app.get('/blogs/:id', blogCont.blog_details)
-
-app.delete('/blogs/:id', blogCont.blog_delete )
-
-app.post('/blogs' , blogCont.blog_create_post)
+app.use(blogRoutes)
 
 
 app.use( (req, res) => {
