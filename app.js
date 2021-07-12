@@ -3,8 +3,7 @@ const app = express();
 const morgran = require('morgan');
 const mongoose = require('mongoose');
 const Blog = require('./models/blog');
-var bodyParser = require('body-parser');
-
+const blogCont = require('./controller/blogController')
 // Connecting to mongo db
 const dbURI =  'mongodb+srv://Alaref:uUYZcvwrlmYFGXJK@cluster0.n9u2f.mongodb.net/database?retryWrites=true&w=majority'
 mongoose.connect(dbURI , { useNewUrlParser: true ,  useUnifiedTopology: true } )
@@ -33,35 +32,16 @@ app.get('/about' , (req,res) => {
 });
 
 // Blog pages
+app.get('/blogs' , blogCont.blog_index )
 
-app.get('/blogs' , (req,res) => {
-    Blog.find().sort({createdAt: -1})
-        .then( result => res.render('index' , {title: 'Home' , blogs: result }))
-        .catch(err => console.log(err))
-})
+app.get('/blogs/create' , blogCont.blog_create_get );
 
-app.get('/blogs/:id', (req,res) => {
-    const id = req.params.id;
-    Blog.findById(id)
-        .then(result => {
-            res.render('detail' , { title: `Detail ${id}`  , blog: result})
-        })
-        .catch(err => {
-            console.log(err);
-        })
-})
+app.get('/blogs/:id', blogCont.blog_details)
 
-app.post('/blogs' , (req,res) => {
-    const blog = new Blog(req.body);
-    blog.save()
-        .then( result => res.redirect('/blogs')  )
-        .catch(err => console.log(err))
+app.delete('/blogs/:id', blogCont.blog_delete )
 
-})
+app.post('/blogs' , blogCont.blog_create_post)
 
-app.get('/blogs/create' , (req,res) => {
-    res.render('create')
-});
 
 app.use( (req, res) => {
     res.status(404).render('404');
